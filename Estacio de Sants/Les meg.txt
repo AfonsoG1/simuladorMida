@@ -1,0 +1,45 @@
+Ja sabeu com es diu llegeix-me en noruec.
+
+Coses a recordar de la pràctica i que us poden penalitzar la nota:
+
+* No configurar el vostre element des d'un arxiu de text: desenvolupar un simulador a mida sovint
+inclou que no es modifica el comportament dels elements, pot modificar-se el flux que segueixen les
+entitats, si executeu aquesta instància amb el model.txt que us deixo ho podreu observar, però també
+pot ser necessari canviar la configuració d'algun element -quan de temps trigo a fer un event o quina 
+capacitat té la meva cua-, l'objecte que us he deixat té una configuració que treballa amb un arxiu 
+'ascensor.cfg' el vostre objecte també hauria de teni un xxxx.cfg
+
+* No incloure alguna distribució estocàstica, fer un model de simulació on tot es determinista ho podríeu
+fer segurament amb un excel (feixuc però possible), ara bé introduir la component estocàstica et permet 
+aproximar-te més a la realitat perquè no tot és blanc o negre, el model d'ascensor trobareu un exemple 
+de com usar la llibreria random (no feu servir la mateixa distribució, busqueu alguna que us pugui fer gràcia)
+De fet el random potser no és la mateixa opció pq no ens permet 
+
+* No incloure estadístics, fer un estudi de simulació sense agafar estadístics és com anar a buscar bolets
+sense cistell, així que aprofiteu per posar algun parell d'estadístics o més (que no costa tant) perquè doni
+sentit al vostre objecte -temps que estic servint, nombre d'entitats servides o incidents...- però no tot 
+poden ser comptadors disposem de conceptes com el valor promig, el màxim, el mínim, la variança (mnty que dius)
+cada estadístic té el sentit en cada estudi.
+
+* No enviar l'entitat al seu següent objecte, quan hem acabat de fer el que teniem que fer amb la nostra entitat
+l'hem d'enviar al següent element que la processarà, si li feu una ullada al fitxer de configuració de l'ascensor
+veureu una estrategia que es pot usar (no té royalties, així que vosaltres mateixos). He modificat el simulador
+de forma que a partir de l'arxiu de configuració i del nom de l'objecte podeu recuperar l'identificador del
+següent element (si busqueu per self.seguent veureu com utilitzo aquesta informació). Fins i tot l'objecte final 
+del meu model d'exemple té un seguent igual a "" i el sistema sap que l'entitat no continuarà el seu camí (la 
+resta ho farà python i eliminarà l'objecte). IMPORTANT: si teniu més d'un possible element on anar ho haurieu de gestionar
+vosaltres mateixos.
+
+* No tenir coherència en els temps de simulació, cada cop que programeu un esdeveniment feu servir la funció
+programarEsdeveniment que té programada la classe pare, dins dels arguments que espera hi ha el temps. Aquest 
+temps és el temps que triga en consumir-se l'esdeveniment (si són les 10:00 i les persones arriben cada 15 segons,
+ hauríeu de passar el valor de 15). Totes les unitats s'espera que siguin segons així que sigueu coherents. Els 
+ que genereu arribada de trens feu servir el temps que teniu en el arxiu que vosaltres us creareu però tingueu
+ en compte que heu d'expressar el temps relatiu (si l'arxiu diu que arriben a les 12:00 un tren o un pax i son les 
+ 10:00 hores heu de passar el temps que manca fins arribar a les 12, recordeu que sempre podeu saber en quin temps
+ us trobeu cridant a self.motor.now())
+
+ Doncs res més, qualsevol dubte -meet, campus, correu o café al bar-
+
+ Per cert us he creat un arxiu TDD per a facilitar-vos el testeig i podeu usar l'arxiu ascensor com a exemple.
+

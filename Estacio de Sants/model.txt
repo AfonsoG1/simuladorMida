@@ -1,0 +1,3 @@
+#identificador objecte per a pode instanciar el vostre, nom de l'arxiu, nom MAPA [si; multiples instàncies],inici torn,fi torn
+7,ARRIBADES,AV1;AV3,0,8
+7,DE PASO,AV2;AV4,8,16
