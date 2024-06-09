@@ -17,28 +17,49 @@ class objecteSimulacio:
     #una referencia al motor de simulacio
     motor=None
     
-    def __init__(self,motor,parameters):
+    def __init__(self,motor,parameters, instanciasenar):
         #Inicialment els vostres objectes no tenen un estat definit l'heu de definir vosaltres en el vostre init
-        self.set_estat(Estat.NONE)
+        self.set_estat(Estat.DISPONIBLE)
+
         #Identificador únic
         params=parameters.split(",")
         self._id=int(params[0])
-        self._nom=params[2]
+        self._nom=params[1]
         self.motor=motor
         
     def __repr__(self):
         return self._nom
 
     def tractarEsdeveniment(self, event):
+        return
+        #print("entra tractar esdeveniment del objecte")
         #Que ha de fer el vostre element en funció de l'estat en el que es troba i el tipus d'event
-        assert (False)    
+        #assert (False)    
 
     #Programar un esdeveniment, el tempsExecució és el temps relatiu (el temps que trigueu a fer una acció: preparar entrepà, atendre a algú, aneu en compte els que processeu esdeveniments associats a un temps absolut)
     def programarEsdeveniment(self,tempsExecucio,tipusEsdeveniment,entitat,desti):
+        #print("entra programar del objecte")
+        #print(self)
+        # print(entitat)
+        # print(desti)
+
         if (desti==None):
             #Considerem None com un punt on s'eliminarà l'entitat temporal
             # Heu de fer alguna cosa per eliminar memòria?
             return 
+        
+        #si surt de les escales
+        
+        #if (desti != self.motor.donamObjecte("E7") and desti != self.motor.donamObjecte("E8")):
+            #print("saliendo escales")
+            # print(self.motor.donamObjecte("E7").ocupants)
+            # self.motor.donamObjecte("E7").ocupants-=1
+            # print(self.motor.donamObjecte("E7").ocupants)
+            # self.ocupants-=1
+            # if entitat.propietats['GraoEsquerra']: self.ocupantEsquerra=-1
+
+
+             
         #esdeveniment que programeu que s'inserirà a la llista d'esdeveniment
         #Es guarda en el objecte que ha intentat enviar la entitat (origen)
         event=esdeveniment(desti,self.motor._tempsSimulacio+tempsExecucio,tipusEsdeveniment,entitat,self)
@@ -47,7 +68,7 @@ class objecteSimulacio:
     #Sobrecarregueu aquesta funció per a inicialitzar el vostre objecte i, per exemple, poder recuperar els successors i predecessors (si s'escau)
     def iniciSimulacio(self):
         #self._successor[...]=self.motor.donamObjecte(identificador sucessor)
-        self.estat=Estat.LLIURE
+        self.estat=Estat.DISPONIBLE
         #Inicialitzar les estructures que siguin necessàries
     
     def fiSimulacio(self):
@@ -68,7 +89,7 @@ class objecteSimulacio:
 
     #sobrecarregueu aquest element per tal que mostreu un resum dels vostres estadístics
     def summary(self):
-        print("mnty")
-        assert (False)
+        if (self._nom=="E7" or self._nom=="E8"): print("sum obj")#print(self.total_passengers)
+        #assert (False)
         
         

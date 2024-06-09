@@ -1,10 +1,10 @@
 import bisect
 from esdeveniment import *
 
-#TODO incloure el vostre arxiu aquí
+
 from passatger import *
 from tren import *
-from ascensor import *
+from escalaMecanica import *
 from TDD import *
 
 '''
@@ -43,7 +43,7 @@ class motorEventsDiscrets:
             # deleguem l'accio a realitzar de l'esdeveniment a l'objecte que l'ha generat
             properEsdeveniment.perA.tractarEsdeveniment(properEsdeveniment)
             # la traça de l'esdeveniment, per tant no cal que la feu
-            print(properEsdeveniment.perA.trace(properEsdeveniment))
+            #print(properEsdeveniment.perA.trace(properEsdeveniment))
 
         #recollida d'estadistics
         self.fiSimulacio()
@@ -51,12 +51,14 @@ class motorEventsDiscrets:
     def afegirEsdeveniment(self,event):
         if (event.tempsExecucio<self._tempsSimulacio):
             #no podem inserir un esdeveniment d'un temps ja passat
-            assert(False)
+            return
+            #assert(False)
         #inserir esdeveniment de forma ordenada
         bisect.insort(self._llistaEsdeveniments, event)
         a=10
 
     def donamObjecte(self,nomObjecte):
+        
         if (len(nomObjecte)>0):
             return self._dictionariElements[nomObjecte]
         else:
@@ -84,16 +86,31 @@ class motorEventsDiscrets:
     #A completar per cadascun de vosaltres, heu d'instanciar el vostre element
     def instanciar(self,activitat):
         params=activitat.split(",")
-        if '7'==params[0]:
+        if '16'==params[0]:
             #split per identificar si tinc que crear més d'una referència del meu objecte
-            instancies=params[2].split(";")
+            instancies=params[3].split(";")
             instanciasenar=False
             for i in range(0,len(instancies)):
                 #Les escales creades amb i senar seran de pujades altrament seran de baixades (hauríeu d'afegir un paràmetre adicional a la vostra creació)
                 #Els torniquets creats amb i senar serna de sortida i altrament seran d'entrada (hauríeu d'afegir un paràmetre adicional a la vostra creació)
-                act=params[0]+","+","+instancies[i]+","+params[3]+","+params[4]
+                #act=params[0]+","+","+instancies[i]+","+params[3]+","+params[4] + "," + i
+                act=params[0]+","+instancies[i]+","+params[3]+","+params[4]
                 instanciasenar=not instanciasenar
-                self._dictionariElements[instancies[i]]=ascensor(self,act)
+                self._dictionariElements[instancies[i]]=escalaMecanica(self,act, instanciasenar)
+        if '20'==params[0]:
+            instancies=params[3].split(";")
+            instanciasenar=False
+            for i in range(0,len(instancies)):
+                act=params[0]+","+instancies[i]+","+params[3]+","+params[4]
+                instanciasenar=not instanciasenar
+                self._dictionariElements[instancies[i]]=torniquet(self,act, instanciasenar)   
+        if '58'==params[0]:
+            instancies=params[3].split(";")
+            instanciasenar=False
+            for i in range(0,len(instancies)):
+                act=params[0]+","+instancies[i]+","+params[3]+","+params[4]
+                instanciasenar=not instanciasenar
+                self._dictionariElements[instancies[i]]=andana(self,act, instanciasenar)                 
         
     def iniciSimulacio(self):
         for element in self._dictionariElements.values():
