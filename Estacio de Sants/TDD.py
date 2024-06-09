@@ -13,7 +13,7 @@ def TDDMola(motor):
     event=TipusEvent.Arribada
     elmeuobjecte=motor.donamObjecte("E7")#elmeu objecte puja
     elmeuobjecte2=motor.donamObjecte("E8")#elmeu objecte
-    for i in range(0,10000):
+    for i in range(0,50):
         pax=passatger()#el meu passatge, si necessita atributs doncs...
         pax.propietats["PMR"]=False
         pax.propietats["GraoEsquerra"]=False
